@@ -61,6 +61,26 @@ python3 -m http.server 8000
 Opening `index.html` straight from the filesystem works too; only the web-app manifest needs
 a real server.
 
+## Deploying
+
+`.github/workflows/pages.yml` publishes the game to GitHub Pages on every push to `main`,
+and can also be run by hand from the Actions tab. There's no build step — the job copies the
+five site files into `_site/`, adds a `.nojekyll` marker, and uploads that as the Pages
+artifact, so the README and the workflow itself stay off the published site.
+
+Two settings have to be changed by hand once, in the repository settings:
+
+1. **Settings → Pages → Source** must be set to **GitHub Actions** (not "Deploy from a
+   branch"), otherwise the workflow's deploy step fails.
+2. The repository's **default branch** should be `main`, since that's what the workflow
+   triggers on.
+
+The site is then served at `https://<owner>.github.io/<repo>/`. Every path in the game is
+relative, so it works from a project subpath without any base-URL configuration.
+
+Note that a GitHub Pages site is publicly reachable even when the repository itself is
+private — see the password caveat below.
+
 ## About the password
 
 The `mickey` check is a client-side gate, exactly as asked — it keeps casual visitors out of
