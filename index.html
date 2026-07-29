@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0d0b14">
+<meta name="description" content="Black Cat Box — drag to gather cats that add up to 10 before the clock runs out.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Cat Box">
+<title>Black Cat Box</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230d0b14'/><path d='M20 44 L26 18 L44 32 A34 34 0 0 1 56 32 L74 18 L80 44 A32 30 0 1 1 20 44Z' fill='%2317141f'/><circle cx='38' cy='52' r='6' fill='%23ffd166'/><circle cx='62' cy='52' r='6' fill='%23ffd166'/></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===== Password gate ===== -->
+  <section class="screen is-active" id="screen-gate">
+    <div class="panel">
+      <div class="cat-mark" aria-hidden="true">
+        <svg viewBox="0 0 120 110">
+          <path class="cm-head" d="M14 50 L21 12 L46 32 A42 42 0 0 1 74 32 L99 12 L106 50 A46 42 0 1 1 14 50Z"/>
+          <path class="cm-ear" d="M27 22 L30 41 L43 33Z"/>
+          <path class="cm-ear" d="M93 22 L90 41 L77 33Z"/>
+          <ellipse class="cm-eye" cx="45" cy="61" rx="7.5" ry="9"/>
+          <ellipse class="cm-eye" cx="75" cy="61" rx="7.5" ry="9"/>
+          <path class="cm-nose" d="M56 76 h8 l-4 5Z"/>
+          <path class="cm-whisker" d="M18 70 L38 74 M18 82 L38 80 M102 70 L82 74 M102 82 L82 80"/>
+        </svg>
+      </div>
+      <h1 class="title">Black&nbsp;Cat Box</h1>
+      <p class="subtitle">The cattery is locked. Whisper the password.</p>
+
+      <form id="gate-form" autocomplete="off" novalidate>
+        <div class="field">
+          <input id="gate-input" type="password" inputmode="text" placeholder="password"
+                 aria-label="Password" autocapitalize="none" autocorrect="off" spellcheck="false">
+          <button type="button" id="gate-peek" class="peek" aria-label="Show password">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+              <path d="M2 12s3.8-6 10-6 10 6 10 6-3.8 6-10 6-10-6-10-6Z"/>
+              <circle cx="12" cy="12" r="2.7"/>
+            </svg>
+          </button>
+        </div>
+        <p class="hint" id="gate-msg" role="status">&nbsp;</p>
+        <button class="btn btn-primary" type="submit">Unlock</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== Menu ===== -->
+  <section class="screen" id="screen-menu">
+    <div class="panel">
+      <h1 class="title">Black&nbsp;Cat Box</h1>
+      <p class="subtitle">Drag a box around cats whose numbers add up to <b>10</b>. Clear as many as you can in two minutes.</p>
+
+      <ul class="rules">
+        <li><span class="bullet">1</span> Drag across the board to draw a box.</li>
+        <li><span class="bullet">2</span> If the cats inside total exactly 10, they scamper off.</li>
+        <li><span class="bullet">3</span> Every cat you free is one point.</li>
+      </ul>
+
+      <div class="best-row">Best today: <b id="menu-best">0</b></div>
+      <button class="btn btn-primary" id="btn-start">Start</button>
+      <button class="btn btn-ghost" id="btn-sound-menu" aria-pressed="true">Sound: on</button>
+    </div>
+  </section>
+
+  <!-- ===== Game ===== -->
+  <section class="screen screen-game" id="screen-game">
+    <header class="hud">
+      <div class="hud-item">
+        <span class="hud-label">Cats</span>
+        <span class="hud-value" id="hud-score">0</span>
+      </div>
+      <div class="timer">
+        <div class="timer-track"><div class="timer-fill" id="timer-fill"></div></div>
+        <span class="timer-text" id="hud-time">2:00</span>
+      </div>
+      <div class="hud-btns">
+        <button class="icon-btn" id="btn-sound" aria-pressed="true" aria-label="Toggle sound"></button>
+        <button class="icon-btn" id="btn-quit" aria-label="Quit game">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="board-wrap" id="board-wrap">
+      <canvas id="board" aria-label="Cat board"></canvas>
+    </div>
+
+    <p class="tip" id="tip">Drag a box around cats that add up to 10.</p>
+  </section>
+
+  <!-- ===== Game over ===== -->
+  <section class="screen" id="screen-over">
+    <div class="panel">
+      <div class="cat-mark cat-mark--sleepy" aria-hidden="true">
+        <svg viewBox="0 0 120 110">
+          <path class="cm-head" d="M14 50 L21 12 L46 32 A42 42 0 0 1 74 32 L99 12 L106 50 A46 42 0 1 1 14 50Z"/>
+          <path class="cm-ear" d="M27 22 L30 41 L43 33Z"/>
+          <path class="cm-ear" d="M93 22 L90 41 L77 33Z"/>
+          <path class="cm-lid" d="M37 61 q8 7 16 0 M67 61 q8 7 16 0"/>
+          <path class="cm-nose" d="M56 76 h8 l-4 5Z"/>
+          <path class="cm-whisker" d="M18 70 L38 74 M18 82 L38 80 M102 70 L82 74 M102 82 L82 80"/>
+        </svg>
+      </div>
+      <h2 class="title title--sm">Time&rsquo;s up</h2>
+      <div class="score-big" id="over-score">0</div>
+      <p class="subtitle" id="over-line">cats set free</p>
+      <p class="best-row">Best today: <b id="over-best">0</b></p>
+      <button class="btn btn-primary" id="btn-again">Play again</button>
+      <button class="btn btn-ghost" id="btn-menu">Menu</button>
+    </div>
+  </section>
+
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>

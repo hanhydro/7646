@@ -1,0 +1,19 @@
+{
+  "name": "Black Cat Box",
+  "short_name": "Cat Box",
+  "description": "Drag a box around black cats whose numbers add up to 10 before the clock runs out.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#0d0b14",
+  "theme_color": "#0d0b14",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
