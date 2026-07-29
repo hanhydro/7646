@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#241c3a"/>
+      <stop offset="1" stop-color="#0d0b14"/>
+    </linearGradient>
+    <linearGradient id="fur" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#241e36"/>
+      <stop offset="1" stop-color="#141020"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- ears -->
+  <path d="M124 196 L146 74 L246 132 Z" fill="url(#fur)"/>
+  <path d="M388 196 L366 74 L266 132 Z" fill="url(#fur)"/>
+  <path d="M140 186 L155 105 L221 143 Z" fill="#ff8fb1" opacity=".6"/>
+  <path d="M372 186 L357 105 L291 143 Z" fill="#ff8fb1" opacity=".6"/>
+
+  <!-- head -->
+  <ellipse cx="256" cy="266" rx="158" ry="152" fill="url(#fur)"/>
+  <path d="M108 214a158 152 0 0 1 296 0" fill="none" stroke="#ffffff" stroke-opacity=".14" stroke-width="7"/>
+
+  <!-- whiskers -->
+  <g stroke="#ffffff" stroke-opacity=".2" stroke-width="7" stroke-linecap="round">
+    <path d="M142 296 L70 274 M142 330 L66 340"/>
+    <path d="M370 296 L442 274 M370 330 L446 340"/>
+  </g>
+
+  <!-- eyes -->
+  <ellipse cx="192" cy="192" rx="30" ry="35" fill="#ffd166"/>
+  <ellipse cx="320" cy="192" rx="30" ry="35" fill="#ffd166"/>
+  <ellipse cx="192" cy="192" rx="9" ry="25" fill="#0c0a14" opacity=".92"/>
+  <ellipse cx="320" cy="192" rx="9" ry="25" fill="#0c0a14" opacity=".92"/>
+
+  <!-- nose -->
+  <path d="M240 240 h32 l-16 19 Z" fill="#ff8fb1"/>
+
+  <!-- the number -->
+  <text x="256" y="345" text-anchor="middle" font-family="system-ui, sans-serif"
+        font-size="150" font-weight="800" stroke="#06040c" stroke-opacity=".85"
+        stroke-width="22" stroke-linejoin="round" fill="#ffd166"
+        paint-order="stroke">10</text>
+</svg>
