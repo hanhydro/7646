@@ -372,6 +372,46 @@ body::after {
   cursor: crosshair;
 }
 
+/* Credit card, shown for a moment as each round begins. Never blocks a drag:
+   pointer-events stay off, and the fade is driven by a class so it still
+   disappears when reduced-motion switches transitions off. */
+.credit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  margin: 0;
+  padding: 15px 24px;
+  max-width: calc(100% - 32px);
+  pointer-events: none;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  border-radius: 17px;
+  border: 1px solid var(--edge);
+  background: rgba(13, 11, 20, .94);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .6), inset 0 1px 0 rgba(255, 255, 255, .05);
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  transition: opacity .55s ease;
+  animation: creditIn .5s cubic-bezier(.2, .9, .25, 1) both;
+}
+.credit b {
+  color: var(--amber);
+  font-weight: 800;
+}
+.credit.is-gone { opacity: 0; }
+.credit[hidden] { display: none; }
+
+@keyframes creditIn {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 10px)) scale(.96); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
 .tip {
   flex: 0 0 auto;
   margin: 0;
