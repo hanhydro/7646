@@ -567,6 +567,7 @@
       G.sprites = null;
       $('hud-score').textContent = '0';
       $('tip').classList.remove('fade');
+      showCredit();
 
       layout();
 
@@ -582,6 +583,7 @@
     G.running = false;
     cancelAnimationFrame(G.raf);
     G.drag = null;
+    hideCredit();
     Sound.over();
 
     var best = parseInt(store(STORE_BEST) || '0', 10);
@@ -600,11 +602,36 @@
   function quitToMenu() {
     G.running = false;
     cancelAnimationFrame(G.raf);
+    hideCredit();
     $('menu-best').textContent = store(STORE_BEST) || '0';
     showScreen('screen-menu');
   }
 
   function hideTip() { $('tip').classList.add('fade'); }
+
+  // ---- opening credit ----------------------------------------------------
+
+  var creditTimers = [];
+
+  function showCredit() {
+    var el = $('credit');
+    hideCredit();
+    el.hidden = false;
+    el.classList.remove('is-gone');
+    el.style.animation = 'none';       // replay the entrance on every round
+    void el.offsetWidth;
+    el.style.animation = '';
+    creditTimers.push(setTimeout(function () { el.classList.add('is-gone'); }, 2000));
+    creditTimers.push(setTimeout(function () { el.hidden = true; }, 2650));
+  }
+
+  function hideCredit() {
+    for (var i = 0; i < creditTimers.length; i++) clearTimeout(creditTimers[i]);
+    creditTimers = [];
+    var el = $('credit');
+    el.hidden = true;
+    el.classList.remove('is-gone');
+  }
 
   // ---- input -------------------------------------------------------------
 
